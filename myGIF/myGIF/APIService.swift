@@ -8,7 +8,7 @@
 import Foundation
 
 class APIService {
-    let AccessKey: String = "YxSjG7CdmO0o5PmMH5aRX3q_RK-i6jWSjL2rzo1Jjzg"
+    let AccessKey: String = ""
     
     func getData(keyword: String, page: Int, completion: @escaping (APIResponse?) -> Void) {
                        
