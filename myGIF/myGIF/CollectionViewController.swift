@@ -13,8 +13,10 @@ class CollectionViewController: UIViewController {
     let api = APIService()
     var datasource = [Photo]()
     var page = 1
-    var isAvailable = true
+    var isLoading = true
     var keyword = String()
+    var total: Int? = 0
+    
    
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -28,9 +30,10 @@ class CollectionViewController: UIViewController {
         }
         datasource.removeAll()
         reloadCollectionView()
-        
+        page = 1
         keyword += textField.text!
         fetchData()
+        
     }
     
     func reloadCollectionView() -> (){
@@ -42,6 +45,7 @@ class CollectionViewController: UIViewController {
     func fetchData() -> (){
         api.getData(keyword: keyword  ,page: page) { [self] response in
             if let tempResult = response?.results{
+                total = response?.total
                 for i in tempResult{
                     datasource.append(i.urls)
                 }
@@ -95,11 +99,11 @@ extension CollectionViewController: UICollectionViewDataSource{
 extension CollectionViewController: UICollectionViewDelegateFlowLayout{
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if self.collectionView.contentOffset.y > collectionView.contentSize.height - collectionView.bounds.size.height{
-            if isAvailable == true {
-                isAvailable = false
+            if datasource.count < total! && isLoading == true {
+                isLoading = false
                 page += 1
                 fetchData()
-                isAvailable = true
+                isLoading = true
                 
                 }
             }
