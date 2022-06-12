@@ -15,7 +15,12 @@ struct Photo: Codable {
     let thumb: String
 }
 
-struct Response: Decodable {
+struct APIResponse: Codable {
+    let results: [Result]
+}
+
+struct Result: Codable {
     let urls: Photo
 }
+
 

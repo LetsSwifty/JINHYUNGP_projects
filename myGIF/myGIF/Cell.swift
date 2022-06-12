@@ -1,8 +1,8 @@
 //
-//  Cell.swift
+//  Cell2.swift
 //  myGIF
 //
-//  Created by 박진형 on 2022/06/04.
+//  Created by 박진형 on 2022/06/12.
 //
 
 import Foundation

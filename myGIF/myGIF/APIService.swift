@@ -10,21 +10,21 @@ import Foundation
 class APIService {
     let AccessKey: String = "YxSjG7CdmO0o5PmMH5aRX3q_RK-i6jWSjL2rzo1Jjzg"
     
-    func getData(page:Int, completion: @escaping ([Response]?) -> Void) {
+    func getData(keyword: String, page: Int, completion: @escaping (APIResponse?) -> Void) {
                        
-        let urlString = "https://api.unsplash.com/photos?client_id=\(AccessKey)&per_page=20&page=\(page)"
+        let urlString = "https://api.unsplash.com/search/photos?&query=\(keyword)?&client_id=\(AccessKey)&per_page=20&page=\(page)"
         let url = URL(string: urlString)
         
         let request: URLRequest = URLRequest(url: url!)
-        var result: [Response]?
+        var result: APIResponse?
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data, error == nil else {
                 print("error")
                 return }
-            
+          
             do {
-                result = try JSONDecoder().decode([Response].self, from: data)
+                result = try JSONDecoder().decode(APIResponse.self, from: data)
                 completion(result)
             }
             catch {
